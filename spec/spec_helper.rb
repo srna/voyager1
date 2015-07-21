@@ -1,4 +1,5 @@
 require 'simplecov'
+require 'webmock/rspec'
 SimpleCov.start 'rails'
 
 ENV['RAILS_ENV'] = 'test'
@@ -21,6 +22,13 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
   config.order = 'random'
   config.use_transactional_fixtures = false
+
+  config.include Devise::TestHelpers, type: :controller
+  config.before(:each) do
+    stub_request(:get,
+               /https:\/\/joe\d%40example.com:joesthebest@joe\d.billapp.cz\//).
+        to_return(:status => 200, :body => "", :headers => {})
+  end
 end
 
 Capybara.javascript_driver = :poltergeist

@@ -2,17 +2,32 @@ require 'rails_helper'
 
 RSpec.describe ProfilesController, type: :controller do
 
-  describe "GET #show" do
-    it "returns http success" do
-      get :show
-      expect(response).to have_http_status(:success)
+  context "unauthenticated" do
+    describe "GET #show" do
+      it "redirects to login" do
+        get :show
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    describe "GET #update" do
+      it "redirects to login" do
+        get :update
+        expect(response).to redirect_to(new_user_session_path)
+      end
     end
   end
 
-  describe "GET #update" do
-    it "returns http success" do
-      get :update
-      expect(response).to have_http_status(:success)
+  context "authenticated" do
+    before do
+      @user = create(:user)
+      sign_in @user
+    end
+    describe 'GET #show' do
+      it 'returns http success' do
+        get :show
+        expect(response).to be_success
+      end
     end
   end
 
