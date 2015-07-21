@@ -8,15 +8,12 @@ nav.navbar.navbar-default role="navigation"
         span.icon-bar
       a.navbar-brand href="#{root_path}" Voyager 1
     #collapse-nav.collapse.navbar-collapse
-      ul.nav.navbar-nav
-        li
-          a href="#" Invoices
+      - if user_signed_in?
+        ul.nav.navbar-nav
+          li
+            a href="#" Invoices
       ul.nav.navbar-nav.navbar-right
-        li.dropdown
-          a.dropdown-toggle data-toggle="dropdown" href="#"
-            i.glyphicon.glyphicon-user
-            span<> User
-            span.caret
-          ul.dropdown-menu role="menu" 
-            li
-              a href="#" Sign in
+        - if user_signed_in?
+          =render partial: 'application/authenticated'
+        - else
+          =render partial: 'application/unauthenticated'
