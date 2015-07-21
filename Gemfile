@@ -50,5 +50,8 @@ group :test do
   gem 'poltergeist', '>= 1.5.0'
   gem 'simplecov', require: false
   gem 'webmock'
+  gem 'shoulda-matchers'
 end
 
+gem 'email_validator'
+gem 'httparty'

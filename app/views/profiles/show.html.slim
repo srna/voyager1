@@ -1,0 +1,23 @@
+h1 Profile
+p
+  span.bold> E-mail
+  span =@user.email
+p
+  = link_to 'Change Password', edit_user_registration_path,
+            class: 'btn btn-default'
+h2 BillApp Profile
+- if @user.profile
+  p
+    span.bold> Agenda
+    span =@profile.agenda
+  p
+    span.bold> User
+    span =@profile.email
+  span>
+    =link_to 'Change Profile', edit_profile_path, class: 'btn btn-default'
+  span>
+    =link_to 'Delete Profile', profile_path, class: 'btn btn-danger',
+             method: :delete, data: { confirm: "Are you sure?" }
+- else
+  p You don't have a BillApp profile.
+  =link_to 'Create Profile', new_profile_path, class: 'btn btn-primary'

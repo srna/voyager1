@@ -1,0 +1,21 @@
+require 'bill_app/connection'
+
+class Profile < ActiveRecord::Base
+  belongs_to :user
+
+  validates :agenda, presence: true
+  validates :email, presence: true, email: true
+  validates :password, presence: true
+
+  validate :agenda_exists
+
+  validates :user_id, uniqueness: true
+
+  private
+  def agenda_exists
+    bac = BillApp::Connection.new(self)
+    unless bac.valid?
+      errors.add(:agenda, 'Could not log in to agenda')
+    end
+  end
+end
