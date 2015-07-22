@@ -1,15 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Profile, type: :model do
-  it "validates presence of agenda" do
-    should validate_presence_of :agenda
-  end
-  it "validates presence of email" do
-    should validate_presence_of :email
-  end
-  it "validates presence of password" do
-    should validate_presence_of :password
-  end
+
+  it { should validate_presence_of :agenda }
+  it { should validate_presence_of :email }
+  it { should validate_presence_of :password }
 
   context "validates e-mail address" do
     it "rejects wrong e-mail address" do

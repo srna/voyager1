@@ -6,6 +6,7 @@ FactoryGirl.define do
     sequence(:issue_date) { |n| Time.now.advance(days: n) }
     sequence(:due_date) { |n| Time.now.advance(days: n) }
     sequence(:client_name) {|n| "Client #{n}" }
+    profile
   end
 
 end

@@ -16,7 +16,7 @@ h1 Import invoice
         tr
           td = v.number
           td = v.issue_date.strftime('%d.%m.%Y')
-          td = v.client.company
+          td = v.client.try(:company)
           td = currency(v.total_amount, v.currency)
           td = link_to 'Import', import_invoices_path(v.id), class: 'btn btn-primary btn-xs'
 - else

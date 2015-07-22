@@ -28,7 +28,7 @@ class InvoicesController < ApplicationController
                           number: ba_invoice.number,
                           issue_date: ba_invoice.issue_date,
                           due_date: ba_invoice.due_date,
-                          client_name: ba_invoice.client.company,
+                          client_name: ba_invoice.client.try(:company),
                           total_amount: ba_invoice.total_amount,
                           currency: ba_invoice.currency
     )
