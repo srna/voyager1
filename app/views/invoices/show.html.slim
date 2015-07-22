@@ -9,22 +9,33 @@ h1 Invoice #{@invoice.number}
         th Unit Price
         th Total Price
         th Cost
+        th Balance
     tbody
       - @invoice.lines.each do |line|
-        tr
+        tr class="#{number_color(line.balance)}"
           td=line.quantity
           td=line.description
           td=currency(line.unit_price, @invoice.currency)
           td=currency(line.unit_price*line.quantity, @invoice.currency)
           td
-            span>=currency(line.cost, @invoice.currency)
-            span=link_to 'Edit', edit_invoice_line_path(@invoice.id, line.id),
-                         class: 'btn-warning btn-xs btn'
+            span.not-edited
+              span>
+                =currency(line.cost, @invoice.currency)
+              =link_to 'Edit', '#', class: 'btn btn-xs btn-warning'
+            span.edited.hidden
+              =simple_form_for [@invoice, line],
+                               :html => { :class => 'form-inline' } do |f|
+                span
+                  = f.input :cost, label: false, class: 'inline'
+                span
+                  = f.submit 'Edit', class: 'btn btn-warning inline'
+          td=currency(line.balance, @invoice.currency)
     tfoot.bold
       tr
         td[colspan=3] Total
         td=currency(@invoice.total_amount, @invoice.currency)
         td=currency(@invoice.total_cost, @invoice.currency)
+        td=currency(@invoice.balance, @invoice.currency)
 - else
   p No items.
 

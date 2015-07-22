@@ -6,4 +6,8 @@ class Invoice < ActiveRecord::Base
   def total_cost
     self.lines.sum(:cost)
   end
+
+  def balance
+    total_amount - total_cost
+  end
 end
