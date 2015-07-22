@@ -2,8 +2,8 @@ require 'bill_app/connection'
 
 class InvoicesController < ApplicationController
   before_filter :check_profile, :connect, :check_profile_validity,
-                only: [:new, :import]
-  before_action :set_invoice, only: [:show, :edit, :update, :destroy]
+                only: [:new, :import, :index, :show]
+  before_action :set_invoice, only: [:show, :edit, :destroy]
 
   def index
     @invoices = current_user.profile.invoices
@@ -52,14 +52,6 @@ class InvoicesController < ApplicationController
   end
 
   def show
-  end
-
-  def edit
-
-  end
-
-  def update
-
   end
 
   def destroy
