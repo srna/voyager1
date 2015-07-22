@@ -1,0 +1,9 @@
+dl.dl-horizontal
+  dt Number
+  dd =@invoice.number
+  dt Issue date
+  dd =@invoice.issue_date.strftime('%d.%m.%Y')
+  dt Due date
+  dd =@invoice.due_date.strftime('%d.%m.%Y')
+  dt Client
+  dd =@invoice.client_name

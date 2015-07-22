@@ -3,6 +3,12 @@ require 'bill_app/connection'
 class InvoicesController < ApplicationController
   before_filter :check_profile, :connect, :check_profile_validity,
                 only: [:new, :import]
+  before_action :set_invoice, only: [:show, :edit, :update, :destroy]
+
+  def index
+    @invoices = current_user.profile.invoices
+  end
+
   def new
     @invoices = @connection.invoices
     imported_invoices = current_user.profile.invoices
@@ -22,7 +28,9 @@ class InvoicesController < ApplicationController
                           number: ba_invoice.number,
                           issue_date: ba_invoice.issue_date,
                           due_date: ba_invoice.due_date,
-                          client_name: ba_invoice.client.company
+                          client_name: ba_invoice.client.company,
+                          total_amount: ba_invoice.total_amount,
+                          currency: ba_invoice.currency
     )
     invoice.profile = current_user.profile
     ba_invoice.lines.each do |line|
@@ -31,11 +39,27 @@ class InvoicesController < ApplicationController
                                  unit_price: line.unit_price
       )
     end
-    if(invoice.save)
+    if invoice.save
       redirect_to invoice, notice: 'Invoice was successfully imported.'
     else
       redirect_to new_invoice_path, alert: 'Couldn\'t import invoice.'
     end
+  end
+
+  def show
+  end
+
+  def edit
+
+  end
+
+  def update
+
+  end
+
+  def destroy
+    @invoice.destroy
+    redirect_to invoices_path, alert: 'Invoice was deleted.'
   end
 
   private
@@ -55,5 +79,9 @@ class InvoicesController < ApplicationController
       redirect_to profile_path,
         alert: 'You have an invalid BillApp profile. Please update it.'
     end
+  end
+
+  def set_invoice
+    @invoice = current_user.profile.invoices.find(params[:id])
   end
 end

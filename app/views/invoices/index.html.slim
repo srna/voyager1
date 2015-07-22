@@ -1,0 +1,25 @@
+h1 Invoices
+- if @invoices.any?
+  table.table.table-striped
+    thead
+      tr
+        th Number
+        th Date of issue
+        th Client
+        th Total
+        th Action
+    tbody
+      - @invoices.each do |invoice|
+        tr
+          td=invoice.number
+          td=invoice.issue_date
+          td=invoice.client_name
+          td=currency(invoice.total_amount, invoice.currency)
+          td
+            span>
+              =link_to 'View', invoice, class: 'btn btn-primary btn-xs'
+            span
+              =link_to 'Delete', invoice, class: 'btn btn-danger btn-xs',
+                       method: :delete, data: {confirm: 'Are you sure?'}
+- else
+  p No invoices

@@ -1,0 +1,34 @@
+h1 Invoice #{@invoice.number}
+=render partial: 'attributes'
+- if @invoice.lines.any?
+  table.table.table-striped
+    thead
+      tr
+        th Quantity
+        th Description
+        th Unit Price
+        th Total Price
+        th Cost
+    tbody
+      - @invoice.lines.each do |line|
+        tr
+          td=line.quantity
+          td=line.description
+          td=currency(line.unit_price, @invoice.currency)
+          td=currency(line.unit_price*line.quantity, @invoice.currency)
+          td
+            span>=currency(line.cost, @invoice.currency)
+            span=link_to 'Edit', edit_invoice_line_path(@invoice.id, line.id),
+                         class: 'btn-warning btn-xs btn'
+    tfoot.bold
+      tr
+        td[colspan=3] Total
+        td=currency(@invoice.total_amount, @invoice.currency)
+        td=currency(@invoice.total_cost, @invoice.currency)
+- else
+  p No items.
+
+div.actions
+  span
+    =link_to 'Delete', @invoice, class: 'btn btn-danger',
+             method: :delete, data: {confirm: 'Are you sure?'}

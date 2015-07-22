@@ -61,7 +61,7 @@ module BillApp
                     BillApp::Line.new(l['description'],
                                       l['quantity'],
                                       l['unit_price'],
-                                      l['']
+                                      l['id']
                     )
                   end
       )
