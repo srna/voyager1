@@ -11,9 +11,9 @@ nav.navbar.navbar-default role="navigation"
       - if user_signed_in?
         ul.nav.navbar-nav
           li
-            =link_to 'Import invoice', '#'
+            =link_to 'Import invoice', new_invoice_path
           li
-            =link_to 'Invoices', '#'
+            =link_to 'Invoices', invoices_path
 
       ul.nav.navbar-nav.navbar-right
         - if user_signed_in?

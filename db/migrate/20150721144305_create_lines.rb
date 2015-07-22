@@ -1,6 +1,7 @@
 class CreateLines < ActiveRecord::Migration
   def change
     create_table :lines do |t|
+      t.integer :invoice_id
       t.integer :ba_id
       t.string :description
       t.integer :quantity

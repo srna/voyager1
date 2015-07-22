@@ -1,0 +1,22 @@
+h1 Import invoice
+- if @invoices.any?
+  /- @invoices.each do |k,v|
+  /  pre
+  /    =p v
+  table.table.table-striped
+    thead
+      th Number
+      th Date of issue
+      th Client
+      th Total
+      th Action
+    tbody
+      - @invoices.each do |k,v|
+        tr
+          td = v.number
+          td = v.issue_date.strftime('%d.%m.%Y')
+          td = v.client.company
+          td = number_to_currency(v.total_amount, precision: 2, separator: ',', delimiter: ' ', unit: v.currency, format: '%n %u')
+          td = link_to 'Import', import_invoices_path(v.id), class: 'btn btn-primary btn-xs'
+- else
+  p No invoices found.

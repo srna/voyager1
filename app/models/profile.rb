@@ -2,6 +2,7 @@ require 'bill_app/connection'
 
 class Profile < ActiveRecord::Base
   belongs_to :user
+  has_many :invoices, dependent: :destroy
 
   validates :agenda, presence: true
   validates :email, presence: true, email: true
