@@ -17,7 +17,8 @@ h2 BillApp Profile
     =link_to 'Change Profile', edit_profile_path, class: 'btn btn-default'
   span>
     =link_to 'Delete Profile', profile_path, class: 'btn btn-danger',
-             method: :delete, data: { confirm: "Are you sure?" }
+             method: :delete,
+             data: { confirm: "Are you sure? Removing your profile will lead to removing all of your invoices as well!" }
 - else
   p You don't have a BillApp profile.
   =link_to 'Create Profile', new_profile_path, class: 'btn btn-primary'

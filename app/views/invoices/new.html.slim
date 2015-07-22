@@ -20,4 +20,4 @@ h1 Import invoice
           td = currency(v.total_amount, v.currency)
           td = link_to 'Import', import_invoices_path(v.id), class: 'btn btn-primary btn-xs'
 - else
-  p No invoices found.
+  p No new (unimported) invoices found.

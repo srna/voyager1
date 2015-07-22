@@ -34,15 +34,20 @@ class InvoicesController < ApplicationController
     )
     invoice.profile = current_user.profile
     ba_invoice.lines.each do |line|
-      invoice.lines << Line.new(description: line.description,
-                                 quantity: line.quantity,
-                                 unit_price: line.unit_price
+      new_line = Line.new(description: line.description,
+                          quantity: line.quantity,
+                          unit_price: line.unit_price
       )
+      new_line.invoice = invoice
+      next unless new_line.valid?
+      invoice.lines << new_line
     end
     if invoice.save
       redirect_to invoice, notice: 'Invoice was successfully imported.'
     else
-      redirect_to new_invoice_path, alert: 'Couldn\'t import invoice.'
+      redirect_to new_invoice_path,
+                  alert: "Couldn't import invoice. "+
+                         "#{invoice.errors.full_messages.join(' ')}"
     end
   end
 

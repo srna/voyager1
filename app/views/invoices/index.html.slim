@@ -6,15 +6,19 @@ h1 Invoices
         th Number
         th Date of issue
         th Client
-        th Total
+        th Total Amount
+        th Total Cost
+        th Balance
         th Action
     tbody
       - @invoices.each do |invoice|
-        tr
+        tr class="#{number_color(invoice.balance)}"
           td=invoice.number
-          td=invoice.issue_date
+          td=invoice.issue_date.strftime('%d.%m.%Y')
           td=invoice.client_name
           td=currency(invoice.total_amount, invoice.currency)
+          td=currency(invoice.total_cost, invoice.currency)
+          td=currency(invoice.balance, invoice.currency)
           td
             span>
               =link_to 'View', invoice, class: 'btn btn-primary btn-xs'

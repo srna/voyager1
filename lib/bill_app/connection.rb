@@ -44,7 +44,7 @@ module BillApp
         )
       end
       invoices
-    rescue
+    rescue StandardError
       {}
     end
 
@@ -65,7 +65,7 @@ module BillApp
                     )
                   end
       )
-    rescue
+    rescue StandardError
       nil
     end
 
@@ -76,7 +76,7 @@ module BillApp
                   c['contact']['company'],
                   c['contact']['email']
       )
-    rescue
+    rescue StandardError
       nil
     end
 
