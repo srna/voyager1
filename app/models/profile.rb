@@ -10,7 +10,7 @@ class Profile < ActiveRecord::Base
 
   validate :agenda_exists
 
-  validates :user, uniqueness: true, presence: true
+  validates :user, presence: true
 
   private
   def agenda_exists

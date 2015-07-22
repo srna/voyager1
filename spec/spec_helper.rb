@@ -26,7 +26,7 @@ RSpec.configure do |config|
   config.include Devise::TestHelpers, type: :controller
   config.before(:each) do
     stub_request(:get,
-               /https:\/\/joe\d%40example.com:joesthebest@joe\d.billapp.cz\//).
+               /https:\/\/joe\d+%40example.com:joesthebest@joe\d+.billapp.cz\//).
         to_return(:status => 200, :body => "", :headers => {})
   end
 end

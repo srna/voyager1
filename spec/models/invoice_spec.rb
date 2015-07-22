@@ -15,4 +15,20 @@ RSpec.describe Invoice, type: :model do
     end
   end
 
+  context "can have lines" do
+    let(:invoice) { build(:invoice) }
+    let(:line)    { build(:line) }
+    it "initially has no lines" do
+      expect(invoice.lines.count).to eql 0
+    end
+    it "adding a line increases their count" do
+      expect{invoice.lines << line; invoice.save }.to change{invoice.lines.count}.by(1)
+    end
+    it "removing a line decreases their count" do
+      invoice.lines << line
+      invoice.save
+      expect{ line.destroy }.to change{invoice.lines.count}.by(-1)
+    end
+  end
+
 end
