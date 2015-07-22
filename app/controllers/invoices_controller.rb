@@ -12,7 +12,30 @@ class InvoicesController < ApplicationController
   end
 
   def import
-    @invoice = @connection.invoice(params[:id].to_i)
+    ba_invoice = @connection.invoice(params[:id].to_i)
+    raise ActiveRecord::RecordNotFound if ba_invoice.nil?
+    if Invoice.find_by_ba_id(ba_invoice.id)
+      return redirect_to new_invoice_path,
+                  alert: 'Invoice is already imported.'
+    end
+    invoice = Invoice.new(ba_id: ba_invoice.id,
+                          number: ba_invoice.number,
+                          issue_date: ba_invoice.issue_date,
+                          due_date: ba_invoice.due_date,
+                          client_name: ba_invoice.client.company
+    )
+    invoice.profile = current_user.profile
+    ba_invoice.lines.each do |line|
+      invoice.lines << Line.new(description: line.description,
+                                 quantity: line.quantity,
+                                 unit_price: line.unit_price
+      )
+    end
+    if(invoice.save)
+      redirect_to invoice, notice: 'Invoice was successfully imported.'
+    else
+      redirect_to new_invoice_path, alert: 'Couldn\'t import invoice.'
+    end
   end
 
   private

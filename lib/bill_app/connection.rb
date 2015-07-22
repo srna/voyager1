@@ -60,10 +60,13 @@ module BillApp
                   i['invoice']['lines'].collect do |l|
                     BillApp::Line.new(l['description'],
                                       l['quantity'],
-                                      l['unit_price']
+                                      l['unit_price'],
+                                      l['']
                     )
                   end
       )
+    rescue
+      nil
     end
 
     def contact(id)
