@@ -3,16 +3,15 @@ require 'rails_helper'
 RSpec.describe ProfilesController, type: :controller do
 
   context "unauthenticated" do
-    describe "GET #show" do
-      it "redirects to login" do
-        get :show
+    [:new, :edit, :show].each do |a|
+      it "GET ##{a} redirects to login" do
+        get a
         expect(response).to redirect_to(new_user_session_path)
       end
     end
-
-    describe "GET #update" do
-      it "redirects to login" do
-        get :update
+    [:create, :update, :destroy].each do |a|
+      it "POST ##{a} redirects to login" do
+        post a
         expect(response).to redirect_to(new_user_session_path)
       end
     end
